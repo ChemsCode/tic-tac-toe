@@ -41,8 +41,10 @@ const gameBoard = (() => {
         console.log(board);
     }
 
+    const getBoardElement = (index) => board[index];
+
     return {
-        clearBoard, updateBoard, printBoard
+        clearBoard, updateBoard, printBoard, getBoardElement
     };
 })();
 
@@ -51,11 +53,28 @@ const gameBoard = (() => {
 
 const playGame = (() => {
 
+    const playTurn = (player1, player2) =>{
 
+    }
 
-    return {
+    const checkTurn = (player1, player2) =>{
+        let p1_counter = 0;
+        let p2_counter = 0;
 
-    };
+        for(i = 0; i < 9; i++){
+            if(gameBoard.getBoardElement(i) == player1.getSign())
+            p1_counter++;
+            else if(gameBoard.getBoardElement(i) == player2.getSign())
+            p2_counter++;
+        }
+
+        if((p1_counter == p2_counter))
+        console.log("p1 turn")
+        else
+        console.log("p2 turn")  
+    }
+
+    return{checkTurn};
 })();
 
 //making the players factory
@@ -75,3 +94,7 @@ const player2 = Player("Eddine", "O")
 
 gameBoard.updateBoard(player1, 1);
 gameBoard.updateBoard(player2, 3);
+gameBoard.updateBoard(player1, 5);
+gameBoard.updateBoard(player2, 0);
+
+playGame.checkTurn(player1, player2);
