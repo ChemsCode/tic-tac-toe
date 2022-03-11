@@ -30,7 +30,7 @@ function playeGameTurn(){
     for(let i = 0 ; i < 9; i++){
         document.getElementById(`${i}`).addEventListener("click", () => {
             playGame.playTurn(player1, player2, (document.getElementById(`${i}`).getAttribute('id')));
-            console.log("The documnet ID value returned by playedGameTurn is " + (document.getElementById(`${i}`).getAttribute('id')));
+            // console.log("The documnet ID value returned by playedGameTurn is " + (document.getElementById(`${i}`).getAttribute('id')));
         });
     }
 }
@@ -51,7 +51,7 @@ const gameBoard = (() => {
     const updateBoard = (sign, positionChosen) => {
         
         if(board[positionChosen] == ''){
-            console.log("The positionChosen's value is: " + board[positionChosen] + " and the index of that poisition is " + positionChosen)
+            // console.log("The positionChosen's value is: " + board[positionChosen] + " and the index of that poisition is " + positionChosen)
             document.getElementById(`${positionChosen}`).innerHTML = sign; 
             board[positionChosen] = sign;
         }
@@ -82,8 +82,10 @@ const playGame = (() => {
 
     const playTurn = (player1, player2, boardPosition) =>{
         let sign = checkTurn(player1, player2);
-        console.log("This is the sign after the checkTurn method: " + sign);
+        // console.log("This is the sign after the checkTurn method: " + sign);
         gameBoard.updateBoard(sign, boardPosition);
+        checkForWin(player1);
+        checkForWin(player2);
         // assignEventListener(sign, gameBoard.board);
         // playeGameTurn();
 
@@ -108,6 +110,69 @@ const playGame = (() => {
         return player1.getSign()
         else
         return player2.getSign()
+    }
+
+    const checkForWin = (player) => {
+        let consecutive_counter= 0;
+        //Horizontal
+
+        for(let i =0; i <= 6; i +=3){
+            for(let j = i; j < (i+3) ; j++){
+                if(gameBoard.board[j] == player.getSign())
+                consecutive_counter++;
+                else
+                continue;
+            }
+            if(consecutive_counter == 3)
+            console.log(player.getName() + " WINS horizontal!");
+            else
+            consecutive_counter=0;
+        }
+
+        //Vertical
+
+        for(let i =0; i < 3; i++){
+            for(let j = i; j <= (i+6) ; j+=3){
+                if(gameBoard.board[j] == player.getSign())
+                consecutive_counter++;
+                else
+                continue;
+            }
+            if(consecutive_counter == 3)
+            console.log(player.getName() + " WINS vertical!");
+            else
+            consecutive_counter=0;
+        }
+        //diagonal
+
+        for(let i =0; i < 3; i+=2){
+            if(gameBoard.board[4] !== player.getSign())
+            break;
+            else
+            consecutive_counter++;
+
+            if(gameBoard.board[0] == player.getSign() && gameBoard.board[8] == player.getSign()){
+                consecutive_counter+=2;
+            }
+            else if(gameBoard.board[2] == player.getSign() && gameBoard.board[6] == player.getSign()){
+                consecutive_counter+=2;
+            }
+
+            if(consecutive_counter == 3)
+            console.log(player.getName() + " WINS diagonal!");
+            else
+            consecutive_counter=0;
+        }
+
+    }
+
+    const checkForTie = () => {
+
+    }
+
+    const checkForEnd = () => {
+        //win
+        //tie
     }
 
     return{ playTurn};
