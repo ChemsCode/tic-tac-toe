@@ -15,6 +15,15 @@ function makeGrid(){
 
 makeGrid();
 
+function assignEventListener(sign){
+    for(let i = 0 ; i < 9; i++){
+        document.getElementById(`${i}`).addEventListener("click", () => {
+            document.getElementById(`${i}`).innerHTML = sign; 
+        });
+    }
+}
+
+
 
 //making the gameboard module
 
@@ -54,6 +63,9 @@ const gameBoard = (() => {
 const playGame = (() => {
 
     const playTurn = (player1, player2) =>{
+        let sign = checkTurn(player1, player2);
+        console.log(sign);
+        assignEventListener(sign);
 
     }
 
@@ -69,12 +81,12 @@ const playGame = (() => {
         }
 
         if((p1_counter == p2_counter))
-        console.log("p1 turn")
+        return player1.getSign()
         else
-        console.log("p2 turn")  
+        return player2.getSign()
     }
 
-    return{checkTurn};
+    return{ playTurn};
 })();
 
 //making the players factory
@@ -92,9 +104,14 @@ const player1 = Player("Chems", "X");
 const player2 = Player("Eddine", "O")
 
 
-gameBoard.updateBoard(player1, 1);
-gameBoard.updateBoard(player2, 3);
-gameBoard.updateBoard(player1, 5);
-gameBoard.updateBoard(player2, 0);
+// gameBoard.updateBoard(player1, 1);
+// gameBoard.updateBoard(player2, 3);
+// gameBoard.updateBoard(player1, 5);
+// gameBoard.updateBoard(player2, 0);
 
-playGame.checkTurn(player1, player2);
+// playGame.checkTurn(player1, player2);
+
+// for(i = 0; i < 9; i++){
+// playGame.playTurn(player1, player2);
+// }
+

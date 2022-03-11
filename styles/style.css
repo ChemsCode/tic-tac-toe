@@ -53,3 +53,8 @@ html, body {
     font-size: 7rem;
     border: 3px solid black;
 }
+
+.grids:hover{
+    cursor: pointer;
+    background-color: azure;
+}
