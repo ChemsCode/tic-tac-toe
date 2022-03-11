@@ -84,8 +84,7 @@ const playGame = (() => {
         let sign = checkTurn(player1, player2);
         // console.log("This is the sign after the checkTurn method: " + sign);
         gameBoard.updateBoard(sign, boardPosition);
-        checkForWin(player1);
-        checkForWin(player2);
+        checkForEnd(player1, player2);
         // assignEventListener(sign, gameBoard.board);
         // playeGameTurn();
 
@@ -102,9 +101,6 @@ const playGame = (() => {
             else if(gameBoard.board[i] == player2.getSign())
             p2_counter++;
         }
-
-        console.log("This is the count of X's: " + p1_counter);
-        console.log("This is the count of O's: " + p2_counter);
 
         if((p1_counter == p2_counter))
         return player1.getSign()
@@ -123,8 +119,10 @@ const playGame = (() => {
                 else
                 continue;
             }
-            if(consecutive_counter == 3)
-            console.log(player.getName() + " WINS horizontal!");
+            if(consecutive_counter == 3){
+                console.log(player.getName() + " WINS horizontal!");
+                break;
+                }
             else
             consecutive_counter=0;
         }
@@ -138,8 +136,10 @@ const playGame = (() => {
                 else
                 continue;
             }
-            if(consecutive_counter == 3)
+            if(consecutive_counter == 3){
             console.log(player.getName() + " WINS vertical!");
+            break;
+            }
             else
             consecutive_counter=0;
         }
@@ -158,8 +158,10 @@ const playGame = (() => {
                 consecutive_counter+=2;
             }
 
-            if(consecutive_counter == 3)
-            console.log(player.getName() + " WINS diagonal!");
+            if(consecutive_counter == 3){
+                console.log(player.getName() + " WINS diagonal!");
+                break;
+                }
             else
             consecutive_counter=0;
         }
@@ -167,12 +169,22 @@ const playGame = (() => {
     }
 
     const checkForTie = () => {
+        let x = 0;
+        
+        for(let i = 0; i < 9; i++){
+            if(gameBoard.board[i] !== '')
+            x++;
+        }
 
+        if(x == 9)
+        console.log("Tie game!")
     }
 
-    const checkForEnd = () => {
-        //win
-        //tie
+    const checkForEnd = (player1, player2) => {
+        checkForTie();
+        checkForWin(player1);
+        checkForWin(player2);
+
     }
 
     return{ playTurn};
