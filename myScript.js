@@ -16,16 +16,6 @@ function makeGrid(){
 
 makeGrid();
 
-// function assignEventListener(sign, boardArray){
-//     for(let i = 0 ; i < 9; i++){
-//         document.getElementById(`${i}`).addEventListener("click", () => {
-//             document.getElementById(`${i}`).innerHTML = sign; 
-//             boardArray[i] = sign;
-//             console.log(boardArray);
-//         });
-//     }
-// }
-
 function playeGameTurn(){
     for(let i = 0 ; i < 9; i++){
         document.getElementById(`${i}`).addEventListener("click", () => {
@@ -34,6 +24,10 @@ function playeGameTurn(){
         });
     }
 }
+
+document.getElementById("replay").addEventListener("click", () => {
+    gameBoard.clearBoard();
+});
 
 //making the gameboard module
 
@@ -45,6 +39,7 @@ const gameBoard = (() => {
         for(i = 0; i < 9; i++){
             board[i] = '';
             document.getElementById(`${i}`).innerHTML = board[i];
+            document.getElementById("display-results").innerHTML = '';
         }
     }
 
@@ -55,12 +50,6 @@ const gameBoard = (() => {
             document.getElementById(`${positionChosen}`).innerHTML = sign; 
             board[positionChosen] = sign;
         }
-        // else{
-        //     playeGameTurn();
-        // }
-
-        //board[positionChosen] = sign
-        // assignEventListener(sign, board);
         
     }
 
@@ -85,8 +74,7 @@ const playGame = (() => {
         // console.log("This is the sign after the checkTurn method: " + sign);
         gameBoard.updateBoard(sign, boardPosition);
         checkForEnd(player1, player2);
-        // assignEventListener(sign, gameBoard.board);
-        // playeGameTurn();
+
 
     }
 
@@ -110,6 +98,7 @@ const playGame = (() => {
 
     const checkForWin = (player) => {
         let consecutive_counter= 0;
+        let displayResults = document.getElementById("display-results");
         //Horizontal
 
         for(let i =0; i <= 6; i +=3){
@@ -121,7 +110,8 @@ const playGame = (() => {
             }
             if(consecutive_counter == 3){
                 console.log(player.getName() + " WINS horizontal!");
-                break;
+                displayResults.innerHTML = (player.getName() + " WINS horizontal!");
+                return true;
                 }
             else
             consecutive_counter=0;
@@ -138,7 +128,8 @@ const playGame = (() => {
             }
             if(consecutive_counter == 3){
             console.log(player.getName() + " WINS vertical!");
-            break;
+            displayResults.innerHTML = (player.getName() + " WINS vertical!");
+            return true;
             }
             else
             consecutive_counter=0;
@@ -160,7 +151,8 @@ const playGame = (() => {
 
             if(consecutive_counter == 3){
                 console.log(player.getName() + " WINS diagonal!");
-                break;
+                displayResults.innerHTML = (player.getName() + " WINS diagonal!");
+                return true;
                 }
             else
             consecutive_counter=0;
@@ -176,8 +168,10 @@ const playGame = (() => {
             x++;
         }
 
-        if(x == 9)
+        if(x == 9){
+        document.getElementById("display-results").innerHTML = ("Tie game!");
         console.log("Tie game!")
+        }
     }
 
     const checkForEnd = (player1, player2) => {
@@ -201,20 +195,8 @@ const Player = (name, sign) => {
   
 }
 
-const player1 = Player("Chems", "X");
-const player2 = Player("Eddine", "O")
-
-
-// gameBoard.updateBoard(player1, 1);
-// gameBoard.updateBoard(player2, 3);
-// gameBoard.updateBoard(player1, 5);
-// gameBoard.updateBoard(player2, 0);
-
-// playGame.checkTurn(player1, player2);
-
-
-
-// assignEventListener('X', gameBoard.board);
+const player1 = Player("Player 1", "X");
+const player2 = Player("Player 2", "O")
 
 playeGameTurn();
 

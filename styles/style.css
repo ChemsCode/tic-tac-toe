@@ -32,10 +32,13 @@ html, body {
 
 #main{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border: 1px solid black;
 }
+
+
 
 #board{
     display: grid;
@@ -43,7 +46,7 @@ html, body {
     grid-template-columns: repeat(3, 1fr);
     height: 50%;
     width: 50%;
-    margin-bottom: 30%;
+    /* margin-bottom: 30%; */
 }
 
 .grids{
@@ -57,4 +60,22 @@ html, body {
 .grids:hover{
     cursor: pointer;
     background-color: azure;
+}
+
+#replay{
+    background-color: rgb(238, 135, 0); /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5%;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-bottom: 30%;
+}
+
+#display-results{
+    font-size: 3rem;
+    margin-bottom: 2%;
 }
